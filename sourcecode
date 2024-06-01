@@ -1,0 +1,1733 @@
+# -*-s2-*-
+layerinfo type = "layout";
+layerinfo name = "Complete Style";
+layerinfo redist_uniq = "completestyle/layout";
+layerinfo des = "A CSS styleable layout with configurable sidebar, based on SixApart's Bloggish.";
+layerinfo author_name = "branchandroot";
+layerinfo author_email = "";
+layerinfo previews = "completestyle/completestyle.png";
+layerinfo source_viewable = "1";
+layerinfo is_public = 1;
+
+#Many thanks to camomiletea for troubleshooting.
+
+propgroup presentation {
+    # This property is now set in a theme layer
+    property string base_theme {
+        des = "Base Theme";
+        noui = 1;
+    }
+    set base_theme = "basic-green";
+
+    property string layout_type {
+        des = "Layout Type";
+        values = "1C|One column|2CL|Two column (Sidebar on Left)|2CR|Two column (Sidebar on Right)|3CM|Three column (Content in Middle)|3CR|Three column (Sidebars on Right)|3CL|Three column (Sidebars on Left)";
+    }
+    set layout_type = "2CR";
+
+    property string{} theme_stylesheet {
+        noui = 1;
+    }
+    set theme_stylesheet = {
+	    "none" => "",
+        "basic-green" => "BasicGreen/theme-basic-green.css",
+        "basic-blue" => "BasicBlue/theme-basic-blue.css",
+        "basic-orange" => "BasicOrange/theme-basic-orange.css",
+        "basic-blackandwhite" => "BasicBlackandwhite/theme-basic-blackandwhite.css",
+		"colorside-fish" => "ColorSideFish/theme-colorside-fish.css",
+		"colorside-atom" => "ColorSideAtom/theme-colorside-atom.css",
+		"colorside-nadeshiko" => "ColorSideNadeshiko/theme-colorside-nadeshiko.css",
+		"colorside-wintergreen" => "ColorSideWintergreen/theme-colorside-wintergreen.css",
+		"colorside-fallleaves" => "ColorSideFallLeaves/theme-colorside-fallleaves.css",
+        "winter-red" => "WinterRed/theme-winter-red.css",
+		"botanical" => "Botanical/theme-botanical.css",
+		"seaside" => "Seaside/theme-seaside.css",
+		"travel-light" => "Travel/theme-travel-light.css",
+		"travel-dark" => "Travel/theme-travel-dark.css",
+		"tulip-green" => "TulipGreen/theme-tulip-green.css",
+		"neon-butterflies" => "NeonButterflies/theme-neon-butterflies.css",
+    };
+
+    property use page_recent_items;
+    property use page_friends_items;
+    property use page_day_sortorder;
+    property use page_year_sortorder;
+    property use view_entry_disabled;
+    property use use_shared_pic;
+
+    property bool opt_datehead {
+        des = "Show Day Header";
+    }
+    set opt_datehead = true;
+
+    property bool opt_showtime {
+        des = "Show Posting Time on Entries";
+    }
+    set opt_showtime = true;
+
+    property bool opt_userpic_main {
+        des = "Show Userpics on Entries";
+    }
+    property bool opt_userpic_friends {
+        des = "Show Userpics on Entries on your Friends Page";
+    }
+    property bool opt_userpic_entrypage {
+        des = "Show Userpic on the Entry page";
+    }
+    property bool opt_userpic_comments {
+        des = "Show Userpics on Comments";
+    }
+    set opt_userpic_main = true;
+    set opt_userpic_friends = true;
+    set opt_userpic_entrypage = true;
+    set opt_userpic_comments = true;
+
+    property string[][] sidebar_primary {
+        des = "Primary sidebar members";
+        noui = 1;
+    }
+    property string[][] sidebar_secondary {
+        des = "Secondary sidebar members";
+        noui = 1;
+    }
+    set sidebar_primary = []; # Set in prop_init()
+    set sidebar_secondary = []; # Set in prop_init()
+
+    set external_stylesheet = true;
+
+property string[] lang_dayname_shorter {
+    noui = 1;
+    des = "Days of the week, in their one letter forms.  Indexed from 1 (S) to 7 (S).";
+}
+set lang_dayname_shorter = [ "", "S", "M",  "T", "W",
+                             "T", "F", "S" ];
+}
+
+propgroup text {
+    property use text_post_comment;
+    property use text_read_comments;
+    property use text_post_comment_friends;
+    property use text_read_comments_friends;
+    property use text_view_recent;
+    property use text_view_archive;
+    property use text_view_friends;
+    property use text_view_userinfo;
+    property use lang_fmt_date_med;
+    property use lang_fmt_time_short;
+
+property string text_tell_friend {
+    des = "Text to tell a friend about an entry";
+}
+set text_tell_friend = "Tell";
+
+    # i18n props. Not in the interface.
+    property string text_comments {
+        des = "Text for the heading above the comments on the entry page";
+        noui = 1;
+    }
+    set text_comments = "Comments";
+
+    property string text_edit{
+        des = "Text to edit an entry";
+    }
+    property string text_edittag{
+        des = "Text to edit tags for an entry";
+    }
+    property string text_add_to_memories{
+        des = "Text to add an entry into memories";
+    }
+    property string text_track_comments{
+        des = "Text to track new comments on an entry";
+    }
+    property string text_untrack_comments{
+        des = "Text to stop tracking new comments on an entry";
+    }
+    set text_edit = "Edit";
+    set text_edittag = "Edit Tags";
+    set text_add_to_memories = "Remember";
+    set text_track_comments = "Track Comments";
+    set text_untrack_comments = "Stop Tracking Comments";
+
+    property string text_no_subject{
+	des = "Text to put in the header when the entry has no subject";
+    }
+    set text_no_subject = "[No Subject]";
+
+    property string sticky_subject {
+        des = "Sticky note's subject line";
+    }
+
+    property string sticky_post {
+        des = "Sticky note";
+        note = "If you'd like to put a sticky note at the top of your journal, enter it here.";
+        cols = 40;
+        rows = 10;
+        string_mode = "html";
+    }
+    set sticky_subject = "Note";
+    set sticky_post = "";
+
+    property string customtext_title {
+        des = "Title to use for custom text sidebar module";
+    }
+    set customtext_title = "";
+
+    property string customtext_titlelink_url {
+        des = "URL to link to from custom text sidebar module";
+    }
+    set customtext_titlelink_url = "";
+
+    property string customtext_text {
+        des = "Body of custom sidebar module";
+        cols = 40;
+        rows = 10;
+        string_mode = "html";
+    }
+    set customtext_text = "";
+
+    property string customtext2_title {
+        des = "Title to use for second custom text sidebar module";
+    }
+    set customtext2_title = "";
+
+    property string customtext2_titlelink_url {
+        des = "URL to link to from second custom text sidebar module";
+    }
+    set customtext2_titlelink_url = "";
+
+    property string customtext2_text {
+        des = "Body of second custom sidebar module";
+        cols = 40;
+        rows = 10;
+        string_mode = "html";
+    }
+    set customtext2_text = "";
+
+    property string layoutcredit_text {
+	des = "Person to credit if you have an individually created layout";
+    }
+    set layoutcredit_text = "";
+
+    property string layoutcredit_url {
+	des = "URL to link the credit to";
+    }
+    set layoutcredit_url = "";
+}
+
+propgroup sidebars = "Sidebars";
+propgroup sidebars {
+    property bool opt_profile_pic {
+	des = "Display userpic in profile module?";
+    }
+    set opt_profile_pic = true;
+
+    property bool opt_profile_journal {
+	des = "Display username in profile module?";
+    }
+    set opt_profile_journal = false;
+
+    property bool opt_profile_name {
+	des = "Display full name in profile module?";
+    }
+    set opt_profile_name = true;
+
+    property bool opt_profile_web {
+	des = "Display link to user web-page in profile module?";
+    }
+    set opt_profile_web = true;
+
+    property string tag_display {
+        des = "Display of tags in sidebar";
+        values = "cloud|Cloud|list|List";
+    }
+    set tag_display = "cloud";
+
+    property bool tagcount {
+	des = "Show tag count in hierarchical list?";
+	note = "You must set the tag display to List to use this option. If you format your tags hierarchically, separated by colons, this option will display them as nested lists.  Eg 'pets: dog' and 'pets: cat' will display with both 'dog' and 'cat' nested under 'pets'.";
+    }
+    set tagcount = false;
+
+    property bool opt_tag_limit {
+        des = "Cut off tag display in sidebar after certain limit.";
+    }
+    set opt_tag_limit = false;
+
+    property int tag_limit {
+        des = "Limit of tags to display in Tags sidebar.";
+    }
+    set tag_limit = 0;
+
+    property string sideone_first_item {
+        des = "First item in primary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sideone_first_item = "userprofile";
+
+    property string sideone_second_item {
+        des = "Second item in primary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sideone_second_item = "customtext";
+
+    property string sideone_third_item {
+        des = "Third item in primary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sideone_third_item = "viewlinks";
+
+    property string sideone_fourth_item {
+        des = "Fourth item in primary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sideone_fourth_item = "calendar";
+
+    property string sideone_fifth_item {
+        des = "Fifth item in primary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sideone_fifth_item = "links";
+
+    property string sideone_sixth_item {
+        des = "Sixth item in primary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sideone_sixth_item = "customtext2";
+
+    property string sideone_seventh_item {
+        des = "Seventh item in primary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sideone_seventh_item = "tags";
+
+    property string sideone_eighth_item {
+        des = "Eighth item in primary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sideone_eighth_item = "pagesummary";
+
+    property string sideone_ninth_item {
+        des = "Ninth item in primary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sideone_ninth_item = "layoutcredit";
+
+    property string sideone_tenth_item {
+        des = "Tenth item in primary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sideone_tenth_item = "syndicate";
+
+    property string sideone_eleventh_item {
+        des = "Eleventh item in primary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sideone_eleventh_item = "poweredby";
+
+    property string sideone_twelfth_item {
+        des = "Twelfth item in primary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sideone_twelfth_item = "none";
+
+    property string sidetwo_first_item {
+        des = "First item in secondary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sidetwo_first_item = "userprofile";
+
+    property string sidetwo_second_item {
+        des = "Second item in secondary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sidetwo_second_item = "customtext";
+
+    property string sidetwo_third_item {
+        des = "Third item in secondary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sidetwo_third_item = "viewlinks";
+
+    property string sidetwo_fourth_item {
+        des = "Fourth item in secondary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sidetwo_fourth_item = "calendar";
+
+    property string sidetwo_fifth_item {
+        des = "Fifth item in secondary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sidetwo_fifth_item = "links";
+
+    property string sidetwo_sixth_item {
+        des = "Sixth item in secondary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sidetwo_sixth_item = "customtext2";
+
+    property string sidetwo_seventh_item {
+        des = "Seventh item in secondary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sidetwo_seventh_item = "tags";
+
+    property string sidetwo_eighth_item {
+        des = "Eighth item in secondary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sidetwo_eighth_item = "pagesummary";
+
+    property string sidetwo_ninth_item {
+        des = "Ninth item in secondary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sidetwo_ninth_item = "layoutcredit";
+
+    property string sidetwo_tenth_item {
+        des = "Tenth item in secondary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sidetwo_tenth_item = "syndicate";
+
+    property string sidetwo_eleventh_item {
+        des = "Eleventh item in secondary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sidetwo_eleventh_item = "poweredby";
+
+    property string sidetwo_twelfth_item {
+        des = "Twelfth item in secondary sidebar";
+        values = "none|(none)|userprofile|Profile|customtext|Custom Text|viewlinks|Nav Links|calendar|Calendar|links|Links|customtext2|Custom Text Two|tags|Tags|pagesummary|Page Summary|layoutcredit|Layout Credit|syndicate|Syndicate|poweredby|Powered by";
+    }
+    set sidetwo_twelfth_item = "none";
+
+}
+
+propgroup customcss {
+
+    property string linked_stylesheet {
+        des = "Custom external stylesheet URL";
+        note = "If you selected \"(None)\" as your theme and have a custom external stylesheet that you'd like to use instead, or if you'd just like to use a custom external stylesheet in addition to your theme's stylesheet, enter its URL here.";
+    }
+    set linked_stylesheet = "";
+
+    property string custom_css {
+        des = "Custom stylesheet";
+        note = "If you selected \"(None)\" as your theme and have custom CSS that you'd like to use instead, or if you'd just like to add custom CSS in addition to your theme's stylesheet, enter it here.";
+        cols = 80;
+        rows = 20;
+        string_mode = "css";
+    }
+    set custom_css = "";
+}
+
+function prop_init() {
+
+    if (viewer_sees_vbox()) {
+        # Users who see ads cannot use the 1 column layout
+        if ($*layout_type == "1C") {
+            $*layout_type = "2CR";
+        }
+                $*sidebar_primary = [
+                    [ "$*sideone_first_item" ],
+		    [ "$*sideone_second_item" ],
+                    [ "$*sideone_third_item" ],
+                    [ "$*sideone_fourth_item" ],
+                    [ "$*sideone_fifth_item" ],
+                    [ "$*sideone_sixth_item" ],
+                    [ "$*sideone_seventh_item" ],
+                    [ "$*sideone_eighth_item" ],
+                    [ "$*sideone_ninth_item" ],
+                    [ "$*sideone_tenth_item" ],
+                    [ "$*sideone_eleventh_item" ],
+		[ "ads", "" ],
+                ];
+
+            $*sidebar_secondary = [
+                    [ "$*sidetwo_first_item" ],
+		    [ "$*sidetwo_second_item" ],
+                    [ "$*sidetwo_third_item" ],
+                    [ "$*sidetwo_fourth_item" ],
+                    [ "$*sidetwo_fifth_item" ],
+                    [ "$*sidetwo_sixth_item" ],
+                    [ "$*sidetwo_seventh_item" ],
+                    [ "$*sidetwo_eighth_item" ],
+                    [ "$*sidetwo_ninth_item" ],
+                    [ "$*sidetwo_tenth_item" ],
+                    [ "$*sidetwo_eleventh_item" ],
+            ];
+	}
+    else {
+                $*sidebar_primary = [
+                    [ "$*sideone_first_item" ],
+		    [ "$*sideone_second_item" ],
+                    [ "$*sideone_third_item" ],
+                    [ "$*sideone_fourth_item" ],
+                    [ "$*sideone_fifth_item" ],
+                    [ "$*sideone_sixth_item" ],
+                    [ "$*sideone_seventh_item" ],
+                    [ "$*sideone_eighth_item" ],
+                    [ "$*sideone_ninth_item" ],
+                    [ "$*sideone_tenth_item" ],
+                    [ "$*sideone_eleventh_item" ],
+		    [ "$*sideone_twelfth_item" ],
+                ];
+
+            $*sidebar_secondary = [
+                    [ "$*sidetwo_first_item" ],
+		    [ "$*sidetwo_second_item" ],
+                    [ "$*sidetwo_third_item" ],
+                    [ "$*sidetwo_fourth_item" ],
+                    [ "$*sidetwo_fifth_item" ],
+                    [ "$*sidetwo_sixth_item" ],
+                    [ "$*sidetwo_seventh_item" ],
+                    [ "$*sidetwo_eighth_item" ],
+                    [ "$*sidetwo_ninth_item" ],
+                    [ "$*sidetwo_tenth_item" ],
+                    [ "$*sidetwo_eleventh_item" ],
+		    [ "$*sidetwo_twelfth_item" ],
+            ];
+    }
+
+}
+
+
+function print_custom_stylesheet() {}
+
+function print_stylesheet () {
+
+"""
+/* user css */
+""";
+    print_custom_stylesheet();
+}
+
+function container_open (string name) {
+    print safe "<div id='$name'><div id='$name-inner' class='pkg'>\n";
+}
+
+function container_close () {
+    "</div></div>\n";
+}
+
+
+function open_module(string intname, string title, string headlink_url, bool nocontent) {
+    print safe """<div class="module-$intname module">\n""";
+    print safe """<div class='module-inner'>\n""";
+    if ($title != "") {
+        """<div class="module-header"><div class="module-header-inner">\n<h3>""";
+        if ($headlink_url != "") { print safe """<a href="$headlink_url">"""; }
+        print safe $title;
+        if ($headlink_url != "") { """</a>"""; }
+        "</h3>\n</div></div>\n";
+    }
+    if (not $nocontent) {
+        println """<div class="module-content">""";
+    }
+}
+
+function close_module(bool nocontent) {
+    println "</div>\n</div>";
+    if (not $nocontent) { println "</div>"; }
+}
+
+function open_module(string intname, string title, string headlink_url) {
+    open_module($intname, $title, $headlink_url, false);
+}
+function close_module() {
+    close_module(false);
+}
+
+function print_module_list(string[] list) {
+    println """<ul class="module-list">""";
+    foreach var string s ($list) {
+        print safe """<li class="module-list-item">$s</li>""";
+    }
+    println """</ul>""";
+}
+
+function print_module_userprofile(string title, bool show_profile, bool show_userpic) {
+    var Page p = get_page();
+
+
+    open_module("about", "Profile", $p.view_url{"userinfo"});
+    if ( $*opt_profile_pic == true) {
+    println "<div class='userpic'><a href='https://www.insanejournal.com/allpics.bml'>"+$p.journal.default_pic+"</a></div>"; }
+	if ($*opt_profile_journal == true) {
+	println "<div class='username'>"+$p.journal+"</div>"; }
+    if ($*opt_profile_name == true) {
+    println "<div class='journalname'>"+$p.journal.name+"</div>"; }
+	if ($*opt_profile_web == true) {
+	   if ($p.journal.website_url != "") {
+           var string website_value = $p.journal.website_name ? $p.journal.website_name : $*text_website_default_name;
+           println safe """<div class="usersite"><a href="$p.journal.website_url">$website_value</a></div>"""; }
+    	}
+    close_module();
+
+}
+
+function print_module_viewlinks(string title) {
+    var Page p = get_page();
+    open_module("viewlinks", "Navigation", "");
+    var string[] links = [];
+    foreach var string k ($p.views_order) {
+        $links[size $links] = """<a href="$p.view_url{$k}">"""+lang_viewname($k)+"""</a>""";
+    }
+    print_module_list($links);
+    close_module();
+}
+
+function print_module_poweredby(string title) {
+    var Page p = get_page();
+    open_module("powered", $title, "");
+    println """Powered by <a href="$*SITEROOT/">$*SITENAME</a>""";
+    close_module();
+}
+function print_module_pagesummary(string title) {
+    var Page p = get_page();
+
+    var string[] links = [];
+    if ($p isa RecentPage) {
+        var RecentPage cp = $p as RecentPage;
+        var string subject;
+        foreach var Entry e ($cp.entries) {
+            $subject = ($e.subject != "" ? striphtml($e.subject) : "<em>$*text_nosubject</em>");
+            $links[size $links] = """<a href="$e.permalink_url">$subject</a>""";
+        }
+    }
+
+    if (size($links) < 1) { return; }
+    open_module("pagesummary", "Summary", "");
+    print_module_list($links);
+    close_module();
+}
+
+function print_module_tags(string title) {
+
+  if ( $*tag_display == "cloud") {
+#cloud code by lj user carriep62, edited by Ravenwood
+    var int minSize = 10;   # minimum size of tag links, in pixels
+    var int maxSize = 24;   # maximum size of tag links, in pixels
+    var Page p = get_page();    
+    var TagDetail[] tags = $p->visible_tag_list();
+
+    if (size($tags) < 1) { return; }
+    var int most_count = 1;
+    open_module("categories", "Tags", "");
+
+
+    foreach var TagDetail tag ($tags) {
+        if ($tag.use_count > $most_count) { $most_count = $tag.use_count; }
+    }
+
+    var string[] links = [];
+    foreach var TagDetail tag ($tags) {
+        var string uses = get_plural_phrase($tag.use_count, "text_tag_uses");
+        var string security = $tag.visibility;
+        var int tagtextsize = $minSize;
+
+        if ($tag.use_count > 1) {
+            $tagtextsize = (($maxSize-$minSize)*$tag.use_count)/$most_count + $minSize;
+        }
+        $links[size $links] = """<a href="$tag.url" style="font-size: ${tagtextsize}px;" title="$uses, $security">$tag.name</a>""";
+    }
+    
+    "<div id='tag-cloud'>";
+    print_module_list($links);
+    "<div id='tagclear'></div>";
+    "</div>";
+
+    var string tags_url = $p.journal->base_url() + "/tag/"; 
+    print safe """<div class="all-link"><p><a href="$tags_url" title="View all Tags">View all Tags</a></p></div>\n""";
+
+    close_module();
+  }
+
+  if ( $*tag_display == "list") {
+#hierarchical tag code by lj user murklins, edited by Ravenwood
+#####   Config   #####
+
+  # Specify your delimiter.  One char only -- extra chars get truncated.
+  var string delimiter = ":";
+
+  # Do you want to show the tag use counts?
+  var bool show_count = $*tagcount;
+
+  # Specify the text to show just before the use count, if any
+  var string pre_count = "[";
+
+  # Specify the text to show just after the use count, if any
+  var string post_count = "]";
+
+##### End Config #####
+
+  var Page p = get_page();
+var TagDetail[] tags = $p->visible_tag_list();
+  var string list = "";    
+  
+  if (size $p->visible_tag_list() > 0) { 
+    if ($delimiter->length() > 1) {
+      $delimiter = $delimiter->substr(0, 1);
+    } 
+
+    var string[] closing_html;
+    var string[] prev_tags;
+    var int tag_list_pos = 0;
+    var string tier_code = "";
+    $closing_html[0] = "";
+    $prev_tags[0] = "";
+    foreach var TagDetail t ($p->visible_tag_list()) {
+      var string[] tags;
+ 
+      if ($t.name) {  
+        # Split tags into array on delimiter. Oh god, my kingdom
+        # for a f/unction. Stolen shamelessly from lj-user rane500.
+        var int array_counter = 0;
+        var string buffer = "";
+        foreach var string char ($t.name) {
+          if($char == $delimiter) {
+            $tags[$array_counter] = $buffer;
+            $array_counter = $array_counter + 1;
+            $buffer = "";
+          }
+          else {
+            $buffer = $buffer + $char;
+          } 
+        }  
+        $tags[$array_counter] = $buffer;
+  
+        var int pos = 0;
+        foreach var string tier($tags) {
+          if (size $closing_html <= $pos) {
+            # $closing_html keeps track of html that is used to close off open
+            # lists.  Its length must be kept >= to that of the current tag.
+            $closing_html[$pos] = "";
+          }   
+
+          if (size $prev_tags <= $pos) {
+            # The current tag has more tiers than the previous tag.  To avoid array
+            # ref errors when comparing the current tier to the previous one (which
+            # is non-existent, of course) add empty string to $prev_tags.
+            $prev_tags[$pos] = "";
+          }
+    
+          # If we're on a tag's last tier, we need to return a link to the tag,
+          # otherwise plain text is returned.
+          if (size $tags == ($pos + 1)) {
+            $tier_code = """<a href="$t.url">$tier</a>""";
+            if ($show_count) {
+              $tier_code = $tier_code + """&nbsp;<span class="tag-count">${pre_count}${t.use_count}${post_count}</span>""";
+            }
+          }
+          else {
+            $tier_code = """$tier""";
+          }
+
+          # $prev_tags stuffed with dummy empty string when it has fewer tiers than 
+          # current tag.
+          if ($prev_tags[$pos] == "") {     
+            # The current tag has more tiers than the previous tag, so a new
+            # list must be opened.                    
+            $list = $list + """<ul class="tagList"><li class="tagItem">$tier_code""";
+            $closing_html[$pos] = "</li></ul>";
+          }
+          elseif ($tags[$pos] != $prev_tags[$pos]) {   
+            # The current tag's tier is not the same as the previous tag's tier of  
+            # the same level.  This means we may need to close some lists.
+            var int i = 0;
+            foreach var string html ($closing_html) {
+              if ($i > $pos) {
+                $list = $list + $closing_html[$i];                                 
+                # As we append the closing code, pop it off the array.
+                $closing_html[$i] = "";
+              }
+              $i++;
+            }                    
+ 
+            if ($closing_html[$pos] == "") {          
+              # This is the first tier at this level, so open list.
+              $list = $list + """<ul class="tagList"><li class="tagItem">$tier_code""";
+              $closing_html[$pos] = "</li></ul>";
+            }
+            else {              
+              # There have already been tiers added at this level, so just close the previous
+              # list item before adding the new tier.
+              $list = $list + """</li><li class="tagItem">$tier_code""";
+            }                    
+          }
+          else {
+            # The current tag's tier is exactly the same as the previous tag's tier at
+            # this same level.  It has already been included in the list, so do nothing.
+          }  
+          # Moving on to next tier in this tag!
+          $pos++;
+        }
+        $prev_tags = $tags;           
+      }        
+      # Next tag in the list!
+      $tag_list_pos++;
+    }  
+
+    # All the tags have been added so close all outstanding lists.
+    var int i = 0;
+    var string remaining_html = "";
+    foreach var string html ($closing_html) { 
+      if ($html != "") {
+        $remaining_html = $html + $remaining_html;
+        $closing_html[$i] = "";
+      }
+      $i++;
+    }
+    $list = $list + $remaining_html;
+  }
+	
+	
+    open_module("categories", "Tags", ""); 
+    "<div id='tag-hierarchy'>";
+    """$list""";
+    "</div>";
+
+    var string tags_url = $p.journal->base_url() + "/tag/"; 
+    print safe """<div class="all-link"><p><a href="$tags_url" title="View all Tags">View all Tags</a></p></div>\n""";
+    
+    close_module();
+  }
+
+}
+
+function print_module_calendar() {
+    var Page p = get_page();
+    var YearMonth mon = $p->get_latest_month();
+    open_module("calendar", $mon->month_format(), "");
+
+    println """<table summary="Monthly calendar with links to each day's posts">""";
+
+    println "<tr>";
+    foreach var int d (weekdays()) {
+        "<th>"+$*lang_dayname_shorter[$d]+"</th>\n";
+    }
+    println "</tr>";
+
+    foreach var YearWeek week ($mon.weeks) {
+        println "<tr>";
+        foreach var int i (1 .. $week.pre_empty) {
+            print "<td>&nbsp;</td>";
+        }
+
+        foreach var YearDay day ($week.days) {
+            print "<td>";
+            if ($day.num_entries > 0) { print """<a href="$day.url">"""; }
+            print $day.day;
+            if ($day.num_entries > 0) { print """</a>"""; }
+            print "</td>";
+        }
+
+        foreach var int i (1 .. $week.post_empty) {
+            print "<td>&nbsp;</td>";
+        }
+        println "</tr>";
+    }
+
+    println """</table>""";
+    var string calendar_url = $p.view_url{"archive"};
+    print safe """<div class="all-link"><p><a href="$calendar_url" title="View all Archives">View all Archives</a></p></div>\n""";
+
+    close_module();
+}
+function print_module_syndicate(string title) {
+    var Page p = get_page();
+    if ((size $p.data_links_order) < 1) { return; }
+    open_module("syndicate", "Syndicate", "");
+
+    foreach var string k ($p.data_links_order) {
+        print " $p.data_link{$k} ";
+    }
+
+    close_module();
+}
+function print_module_customtext(string title, string text, string titlelink_url) {
+    var Page p = get_page();
+    open_module("customtext", $*customtext_title, $*customtext_titlelink_url);
+    print safe $*customtext_text;
+    close_module();
+}
+
+function print_module_customtext2() {
+    var Page p = get_page();
+    open_module("customtext2", $*customtext2_title, $*customtext2_titlelink_url);
+    print safe $*customtext2_text;
+    close_module();
+}
+
+function print_module_layoutcredit() {
+   var Page p = get_page();
+   open_module("layoutcredit", "Layout By", "");
+   print safe """<p><a href="$*layoutcredit_url">$*layoutcredit_text</a></p>""";
+   close_module();
+}
+
+function print_module_links(string title) {
+    var Page p = get_page();
+    var UserLink[] links = $p.linklist;
+    if (size($links) < 1) { return; }
+
+    var bool box_open = false;
+    if (not $links[0].is_heading) {
+        open_module("typelist", $title, "");
+        $box_open = true;
+    }
+
+    var string[] items = [];
+    foreach var UserLink link ($links) {
+        if ($link.is_heading) {
+            if ($box_open) {
+                print_module_list($items);
+                close_module();
+                $items = [];
+            }
+            open_module("typelist", $link.title, "");
+            $box_open = true;
+        }
+        if (not $link.is_heading and $link.title != "") {
+            $items[size $items] = """<a href="$link.url">$link.title</a>""";
+        }
+    }
+    if ($box_open) {
+        print_module_list($items);
+        close_module();
+    }
+}
+
+
+function handle_sidebar_array(string[][] list) {
+    foreach var string[] item ($list) {
+        var string module = $item[0];
+        var string title = $item[1];
+
+        if ($module == "userprofile") {
+            var bool show_profile = (int($item[2]) != 0 ? true : false);
+            var bool show_userpic = (int($item[3]) != 0 ? true : false);
+            print_module_userprofile($title, $show_profile, $show_userpic);
+        }
+        elseif ($module == "viewlinks") {
+            print_module_viewlinks($title);
+        }
+        elseif ($module == "poweredby") {
+            print_module_poweredby($title);
+        }
+        elseif ($module == "pagesummary") {
+            print_module_pagesummary($title);
+        }
+        elseif ($module == "tags") {
+            print_module_tags($title);
+        }
+        elseif ($module == "calendar") {
+            print_module_calendar();
+        }
+        elseif ($module == "syndicate") {
+            print_module_syndicate($title);
+        }
+        elseif ($module == "customtext") {
+            var string text = $item[2];
+            var string titlelink_url = $item[3];
+            print_module_customtext($title, $text, $titlelink_url);
+        }
+        elseif ($module == "links") {
+            print_module_links($title);
+        }
+        elseif ($module == "customtext2") {
+            print_module_customtext2();
+        }
+        elseif ($module == "layoutcredit") {
+            print_module_layoutcredit();
+        }
+    }
+}
+
+function Page::lay_sidebar_primary() {
+    handle_sidebar_array($*sidebar_primary);
+}
+function Page::lay_sidebar_secondary() {
+    handle_sidebar_array($*sidebar_secondary);
+}
+
+function render_layout (Page p, string lay) {
+   if ($lay == "1C") {
+      container_open("alpha");
+      $p->print_body();
+      container_close();
+      return;
+   }
+
+   if ($lay == "2CL") {
+      container_open("beta");
+      $p->lay_sidebar_primary();
+      container_close();
+      container_open("alpha");
+      $p->print_body();
+"<div id='column-footer'></div>";
+      container_close();
+      return;
+   }
+
+   if ($lay == "2CR") {
+      container_open("beta");
+      $p->lay_sidebar_primary();
+      container_close();   
+      container_open("alpha");
+      $p->print_body();
+"<div id='column-footer'></div>";
+      container_close();
+      return;
+   }
+
+   if ($lay == "3CM") {
+      container_open("beta");
+      $p->lay_sidebar_primary();
+      container_close();
+      container_open("gamma");
+      $p->lay_sidebar_secondary();
+      container_close();      
+      container_open("alpha");
+      $p->print_body();
+"<div id='column-footer'></div>";
+      container_close();
+      return;
+   }
+
+   if ($lay == "3CR") {
+      container_open("gamma");
+      $p->lay_sidebar_primary();
+      container_close();
+      container_open("beta");
+      $p->lay_sidebar_secondary();
+      container_close();      
+      container_open("alpha");
+      $p->print_body();
+"<div id='column-footer'></div>";
+      container_close();
+      return;
+   }
+
+   if ($lay == "3CL") {
+      container_open("beta");
+      $p->lay_sidebar_primary();
+      container_close();
+      container_open("gamma");
+      $p->lay_sidebar_secondary();
+      container_close();      
+      container_open("alpha");
+      $p->print_body();
+"<div id='column-footer'></div>";
+      container_close();
+      return;
+   }
+
+}
+
+function get_layout () : string {
+   var Page p = get_page();
+   var string lay = $*layout_type;
+   if ($lay == "1C" or $lay == "2CR" or $lay == "2CL" or $lay == "3CM" or $lay == "3CR" or $lay == "3CL") {
+      return $lay;
+   }
+   return "2CR";
+}
+
+function body_class (string lay) : string {
+   var string{} map = {
+      "1C" => "layout-one-column",
+      "2CL" => "layout-two-column-left",
+      "2CR" => "layout-two-column-right",
+      "3CM" => "layout-three-column-middle",
+      "3CR" => "layout-three-column-right",
+      "3CL" => "layout-three-column-left",
+   };
+   return $map{$lay};
+}
+
+function Page::print_stylesheets() {
+
+    if ($*base_theme != "__none") {
+        println safe """<link rel="stylesheet" href="$*SITEROOT/stc/completestyle/$*theme_stylesheet{$*base_theme}" type="text/css" />\n""";
+    }
+    if ($*linked_stylesheet != "") {
+        println safe """<link rel="stylesheet" href="$*linked_stylesheet" type="text/css" />\n""";
+    }
+    if ($*custom_css != "") {
+        println """<style type="text/css">""";
+        start_css();
+        println safe $*custom_css;
+        end_css();
+        println """</style>""";
+    }
+
+    if ($*external_stylesheet) {
+        println safe """<link rel="stylesheet" href="$.stylesheet_url" type="text/css" />\n""";
+    }
+    else {
+        println """<style type="text/css">""";
+        start_css();
+        print_stylesheet();
+        end_css();
+        println """</style>""";
+    }
+}
+
+
+function Page::lay_print_banner() {
+	container_open("header");
+    container_open("banner");
+    "<div id='banner-text'>";
+	
+		"<ul id='nav-above'>";
+		 # Recent, Archive, Friends, Userinfo
+    foreach var string v ($.views_order) {
+        var string url   = $.view_url{$v};
+        var string text  = lang_viewname($v);
+        var string class = "banner-viewlinks";
+        if($v == $.view) {
+            $class = $class + " current";
+        }
+        if($v == $.views_order[0]) {
+            $class = $class + " first";
+        }
+
+        $class = " class=\"$class\"";
+
+        print """<li$class><a href="$url" title="$text">$text</a></li>""";
+    }
+
+    var Link memories_url = $.journal->get_link("memories");
+
+        println safe """<li class="banner-viewlinks"><a href="$memories_url.url" title="Memories">Memories</a></li>""";
+
+		"</ul>";
+		
+      "<div id='header-text'>";
+	"<h1 id='banner-header'>";
+	var string base_url = $.journal->base_url();
+    var string friends_url = $.view_url{"friends"};
+    if ($this isa FriendsPage) {
+        print safe """<a href="$friends_url">""" + $this->view_title() + """</a></h1>""";
+    } else {
+        print safe """<a href="$base_url">$.global_title</a></h1>""";
+    }
+
+      "<p id='banner-description'>$.global_subtitle</p>";
+	"</div>";
+	  
+	  		"<ul id='nav-below'>";
+		 # Recent, Archive, Friends, Userinfo
+    foreach var string v ($.views_order) {
+        var string url   = $.view_url{$v};
+        var string text  = lang_viewname($v);
+        var string class = "banner-viewlinks";
+        if($v == $.view) {
+            $class = $class + " current";
+        }
+        if($v == $.views_order[0]) {
+            $class = $class + " first";
+        }
+
+        $class = " class=\"$class\"";
+
+        print """<li$class><a href="$url" title="$text">$text</a></li>""";
+    }
+
+        println safe """<li class="banner-viewlinks"><a href="$memories_url.url" title="Memories">Memories</a></li>""";
+
+		"</ul>";
+		
+      "</div>";
+    container_close();
+    container_close();
+}
+
+
+function Page::print () {
+
+ var string lay = get_layout();
+ var string body_layout_class = body_class($lay);
+
+
+   """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html xmlns="https://www.w3.org/1999/xhtml">
+	<head>
+	   """;
+	
+		$this->print_head();
+		$this->print_stylesheets();
+		"""<title>""" + $this->title() + """</title>\n""";
+	
+	"""
+	</head>
+	<body class='$body_layout_class lj-view-$.view'>""";
+	
+	$this->print_control_strip();
+	
+	container_open("container");
+
+	$this->lay_print_banner();
+	
+	container_open("pagebody");
+	
+	 render_layout($this, $lay);
+	
+ "<div id='content-footer'></div>\n";
+
+container_close();
+
+container_open("page-footer");
+container_close();
+
+container_close();
+	
+	"</body></html>";
+}
+
+function print_sticky() {
+    if ($*sticky_post != "") {
+        """
+    <div id="sticky-note">
+      <div class="entry">
+	<div class="entry-inner">
+
+        """;
+
+        if ($*sticky_subject != "") {
+            print safe """<div class="entry-header">
+		<h2>$*sticky_subject</h2>
+		</div>""";
+        } else {
+            """<div class="entry-header"><h2>Sticky Note</h2></div>""";
+        }
+
+        """<div class="entry-content">
+         <div class="entry-body">
+	<div class="entry-text">""";
+
+        print safe $*sticky_post;
+
+        "</div>\n</div>\n</div>\n";
+        """<div class="entry-footer"></div>\n</div>\n</div>\n</div>\n""";
+    }
+}
+
+function RecentPage::print_body() {
+
+    if ($.nav.backward_url != "" or $.nav.forward_url != "") {
+        println """<div class="content-nav nav-top">""";
+        if ($.nav.backward_url != "") {
+            println """<a href="$.nav.backward_url">"""+get_plural_phrase($.nav.backward_count, "text_skiplinks_back")+"</a>";
+        }
+        if ($.nav.backward_url != "" and $.nav.forward_url != "") {
+            print " | ";
+        }
+        if ($.nav.forward_url != "") {
+            println """<a href="$.nav.forward_url">"""+get_plural_phrase($.nav.forward_count, "text_skiplinks_forward")+"</a>";
+        }
+        println """</div>""";
+    }
+
+    if (not($this isa FriendsPage)) {
+        print_sticky();
+    }
+
+# tag page header- code contributed by camomiletea
+    if ($.data_link{"rss"}.url->contains("?tag=")) { # If viewing tags page
+
+        var int baseurl_length = $.base_url->length() + 14; # "/data/rss?tag=" = 14 chars
+        var int feedurl_length = $.data_link{"rss"}.url->length();
+
+        var string tag_name= $.data_link{"rss"}.url->substr($baseurl_length, $feedurl_length - $baseurl_length);
+
+        print "<div id='tagpage-header'><h2>Posts Tagged: '$tag_name'</h2></div>";
+    }
+#end tag header
+
+    foreach var Entry e ($.entries) {
+        if ($*opt_datehead and $e.new_day) {
+            print """<div class="date-header"><h2>"""+$e.time->date_format("med")+"""</h2></div>""";
+        }
+
+        # Print the entry
+        $this->print_entry($e);
+    }
+
+    if ($.nav.backward_url != "" or $.nav.forward_url != "") {
+        println """<div class="content-nav nav-bottom">""";
+        if ($.nav.backward_url != "") {
+            println """<a href="$.nav.backward_url">"""+get_plural_phrase($.nav.backward_count, "text_skiplinks_back")+"</a>";
+        }
+        if ($.nav.backward_url != "" and $.nav.forward_url != "") {
+            print " | ";
+        }
+        if ($.nav.forward_url != "") {
+            println """<a href="$.nav.forward_url">"""+get_plural_phrase($.nav.forward_count, "text_skiplinks_forward")+"</a>";
+        }
+        println """</div>""";
+    }
+
+}
+
+function EntryPage::print_body() {
+          var Page p = get_page();
+          var bool printqr = false;
+
+    var Link forward = $.entry->get_link("nav_next");
+    var Link backward = $.entry->get_link("nav_prev");
+
+    "<div class='content-nav entrypage'>\n";
+    "<a href='$backward.url'>Previous</a> | ";
+    "<a href='$forward.url'>Next</a>\n";
+    "</div>";
+
+    $this->print_entry($.entry);
+
+    if ($.entry.comments.enabled and $.comment_pages.total_subitems > 0) {
+
+"""
+	<a id="comments"></a>
+	<div id="comments">
+	<div id="comments-inner">
+		<div class="comments-header"><h2>$*text_comments</h2></div> """;
+
+              $printqr = true;
+              """<div class="comments-nav">("""; 
+	$p->print_reply_link({"linktext" => $*text_post_comment, "target" => "qr$.journal.username$.entry.itemid"}); 
+	""")</div>
+ 
+		<div class="comments-list">
+			<!-- comment list -->
+""";
+
+    if(not $.comment_pages.all_subitems_displayed) {
+        $.comment_pages->print();
+    }
+    foreach var Comment c ($.comments) {
+        $this->print_comment($c);
+    }
+    if(not $.comment_pages.all_subitems_displayed) {
+        $.comment_pages->print();
+    }
+
+"""
+		</div>""";
+
+              $printqr = true;
+              """<div class="comments-nav">("""; 
+	$p->print_reply_link({"linktext" => $*text_post_comment, "target" => "qr$.journal.username$.entry.itemid"}); 
+	""")</div>
+
+	</div>
+	</div>
+""";
+	}
+
+         if ($printqr) { $p->print_reply_container({"class" => "quickreply_entry", "target" => "qr$.journal.username$.entry.itemid"}); }
+
+}
+
+function lang_posted_by(UserLite poster, UserLite journal, Page p) : string {
+    var string posted = (defined $poster ? ""+$poster : "<i>$*text_poster_anonymous</i>");
+    if (not $poster->equals($journal) and not ($p.view == "recent" and $p.journal_type == "C")) {
+        $posted = $posted + " <br> " + $journal;
+    }
+    return "$posted";
+}
+
+function lang_posted_by(UserLite poster, UserLite journal) : string {
+    return lang_posted_by($poster, $journal, new Page);
+}
+
+function lang_posted_date_and_time(EntryLite e, DateTime dt, bool showdate, bool showtime) : string {
+    var string posted = "Posted";
+    $posted = ($showdate ? "" : " at ");
+
+    if ($showdate and $showtime) {
+        if ($e.depth > 0) { # If $e is a comment
+            return $posted + $e->time_display("med", "");
+        } else {
+            #return $posted + $dt->date_format("med") + " at " + $dt->time_format();
+            return $posted + $e->time_display($*lang_fmt_date_med + " at %%h%%:%%min%% %%A%%M", "none");
+        }
+    }
+    if ($showdate and not $showtime) {
+        #return $posted + $dt->date_format("med");
+        return $posted + $e->time_display("med", "none");
+    }
+    if (not $showdate and $showtime) {
+        #return $posted + $dt->time_format();
+        return $e->time_display("none", "%%h%%:%%min%% %%A%%M");
+    }
+    return "";
+}
+
+function lang_posted_by_date_and_time(UserLite poster, DateTime dt, bool showposter, bool showdate, bool showtime) : string {
+    return lang_posted_date_and_time(new EntryLite, $dt, $showdate, $showtime);
+}
+
+function lang_posted_by_date_and_time(EntryLite e, UserLite poster, UserLite journal, DateTime dt, bool showposter, bool showdate, bool showtime) : string {
+    return lang_posted_date_and_time($e, $dt, $showdate, $showtime);
+}
+
+
+function Comment::print_linkbar() {
+          """
+          <div class="comment-linkbar"><ul>
+          """;
+          # reply to, parent, thread links.
+          """<li class="first-cl">"""; $this->print_reply_link({"linktext" => $*text_comment_reply}); """</li>""";
+          if ($.parent_url!="") { print safe """<li><a href="$.parent_url">$*text_comment_parent</a></li>"""; }
+          if ($.thread_url!="") { print safe """<li><a href="$.thread_url">$*text_comment_thread</a></li>"""; }
+          print safe """<li><a href="$.permalink_url">Link</a></li>""";
+          var Link l;
+          foreach var string key ($.link_keyseq) {
+            $l = $this->get_link($key);
+            if (defined $l) { """<li><a href="$l.url">$l.caption</a></li>"""; }
+
+          }
+          if (viewer_is_owner()) {
+            print safe """<li>$*text_multiform_check"""; $this->print_multiform_check(); """</li>""";
+          }
+          """
+          </ul></div>
+          """;
+          $this->print_reply_container({"class" => "quickreply_comment"});
+}
+
+function EntryPage::print_comment(Comment e) {
+      var bool showtime = true;
+      var bool showdate = true;
+var string barc = "comment-" + ($e.depth % 2 ? "odd" : "even");
+
+    if (not $e.full) {
+        # Collapsed mode
+
+        "<div class='comment collapsed-comment'"+($e.dom_id ? " id='$e.dom_id'" : "")+">\n";
+        "<a name='$e.anchor'></a>\n";
+	"<div class='comment-footer'>";
+        var string subject = $e.subject;
+        if ($subject == "") { $subject = $*text_nosubject; }
+        "<a href='$e.permalink_url' class='collapsed-comment-link'>$subject</a> <span class='separator'>-</span> ";
+        print lang_posted_by($e.poster, $e.poster); " <span class='separator'>-</span> ";
+        print lang_posted_date_and_time($e, $e.time, $showdate, $showtime);
+        "</div>";
+
+        if (size($e.replies) > 0) {
+            println "<div class='comment-replies'>";
+
+            foreach var Comment c ($e.replies) {
+                $this->print_comment($c);
+            }
+
+            println "</div>";
+        }
+
+        "</div>";
+
+        return;
+    }
+
+    "<div class='comment'"+($e.dom_id ? " id='$e.dom_id'" : "")+">\n";
+    "<a name='$e.anchor'></a>\n";
+	"""<div class="comment-each $barc">\n""";
+	
+	"<div class='comment-header'>";
+    "<div class='comment-userpic'>";
+    if ($*opt_userpic_comments and defined $e.userpic) { "$e.userpic"; }
+    "</div>";
+    "<div class='comment-by'>";
+    "<span class='poster'>"+lang_posted_by($e.poster, $e.poster)+"</span>";
+    var string ip = $e.metadata{"poster_ip"};
+    if ($ip != "") {
+        "<span class='metadata'> ";
+        "($ip)";
+        "</span>";
+    }    
+    "</div>";
+    "<div class='comment-date'>"; 
+    print lang_posted_date_and_time($e, $e.time, $showdate, $showtime);  
+    "</div>";
+
+    if ($e.subject != "") {
+        "<div class='comment-subject'><h3>$e.subject</h3></div>\n";
+    }
+	"</div>"; #end comment-header
+	
+    "<div class='comment-content'>";
+
+    $e->print_text();
+    "</div>";
+	
+    "<div class='comment-footer'>";
+    var string sep = "<span class='separator'>|</span>";
+
+    #"<a class='permalink' href='$e.permalink_url'>$*text_permalink</a>";
+
+    #if ($e.parent_url) { print " $sep <a href='$e.parent_url'>$*text_comment_parent</a>"; }
+    #if ($e.thread_url) { print " $sep <a href='$e.thread_url'>$*text_comment_thread</a>"; }
+    #if ($e.reply_url)  { print " $sep <a href='$e.reply_url'>$*text_comment_reply</a>"; }
+
+    $e->print_linkbar();
+    "</div>\n";
+	
+    "</div>\n"; #end comment-each
+
+    if (size($e.replies) > 0) {
+        println "<div class='comment-replies'>";
+
+        foreach var Comment c ($e.replies) {
+            $this->print_comment($c);
+        }
+
+        println "</div>";
+    }
+
+    "</div>";
+}
+
+function Entry::print_linkbar() {
+          var Page p = get_page();
+          var bool printqr = false;
+
+          """
+          <div class="entry-linkbar"><ul>
+          """;
+          if ($.comments.enabled) {
+
+              $printqr = true;
+              """<li class="first-el">"""; $p->print_reply_link({"linktext" => $*text_post_comment, "target" => "qr$.journal.username$.itemid", "reply_url" => $.comments.post_url}); """</li>""";
+               
+		if ($.comments.count > 0 or $.comments.screened) {
+                """<li><a href="$.permalink_url?style=mine#comments">"""; print safe get_plural_phrase($.comments.count,"text_read_comments"); """</a></li>""";
+#href was .comments.read_url
+              }           
+          }
+          print safe """<li><a href="$.permalink_url">$*text_permalink</a></li>""";
+
+
+          var string{} link_caption = {
+            "edit_entry" => $*text_edit,
+            "edit_tags" => $*text_edittag,
+            "mem_add" => $*text_add_to_memories,
+            "tell_friend" => "$*text_tell_friend",
+            "watch_comments" => $*text_track_comments,
+            "unwatch_comments" => $*text_untrack_comments,
+          };
+	
+          var Link link;
+          var string url;
+          var string text;
+
+          foreach var string link_key ($.link_keyseq) {
+            $link = $this->get_link($link_key);
+            $url = $link.url;
+            $text = $link_caption{$link_key} != "" ? $link_caption{$link_key} : $link.caption;
+            if (defined $link) {
+              print safe """<li><a href="$url">$text</a></li>""";
+            }
+          }
+          """
+          </ul></div> <!-- entryLinkbar -->
+          """;
+          if ($printqr) { $p->print_reply_container({"class" => "quickreply_entry", "target" => "qr$.journal.username$.itemid"}); }
+}
+
+
+function print_entry(Page p, Entry e) {
+
+var string subject = "";
+if ($e.subject != "") { $subject = $e.subject; }
+else { $subject = $*text_no_subject; }
+
+    "<div class='entry'" + ($e.dom_id ? " id='$e.dom_id'" : "") + ">\n";
+    "<div class='entry-inner'>\n";
+
+      var bool showtime = $*opt_showtime;
+      var bool showdate = not $*opt_datehead;
+      var bool showposter = false;
+      var bool showuserpic = $*opt_userpic_main;
+      if ($p.view == "friends") { $showtime = $*opt_showtime; $showdate = true; $showposter = true; $showuserpic = $*opt_userpic_friends; }
+      if ($p.view == "day") { $showdate = false; }
+      if ($p.view == "entry" or $p.view == "reply") { $showdate = true; }
+      if ($p.view == "recent") { $showdate = true; }
+      if ($p.view == "entry") { $showuserpic = $*opt_userpic_entrypage; }
+      if (not $e.poster->equals($e.journal)) { $showposter = true; }
+
+
+      if (($showuserpic and defined $e.userpic) or $showposter) {
+          "<div class='outer-entry-userpic'>";
+          if ($showuserpic and defined $e.userpic) { "$e.userpic"; }
+          if (($showuserpic and defined $e.userpic) and $showposter) { "<br />"; }
+          if ($showposter) { "<span class='pic-poster'>"+lang_posted_by($e.poster, $e.journal)+"</span>"; }
+          "</div>\n";
+      }
+
+      "<div class='entry-header'><div class='entry-header-inner'>\n";
+      if (($showuserpic and defined $e.userpic) or $showposter) {
+          "<div class='mid-entry-userpic'>";
+          if ($showuserpic and defined $e.userpic) { "$e.userpic"; }
+          if (($showuserpic and defined $e.userpic) and $showposter) { "<br />"; }
+          if ($showposter) { "<span class='pic-poster'>"+lang_posted_by($e.poster, $e.journal)+"</span>"; }
+          "</div>\n";
+      }
+      "<h3>";
+      if (defined $e.security_icon) {
+          print "<span class='lj-entry-securityicon'>$e.security_icon</span> ";
+      }
+      "<a href='$e.permalink_url?style=mine'>$subject</a></h3>\n";
+      "</div></div>\n";
+
+
+
+	if ($showposter) {
+	  "<div class='header-poster'>";
+	  print lang_posted_by($e.poster, $e.journal);
+#removed $this from both lang_posted_by, no clue why compiler choked on it
+	  "</div>";
+	}
+          if ($showdate or $showtime) {
+          	 "<div class='entry-datetime'>";
+             print lang_posted_date_and_time($e, $e.time, $showdate, $showtime);
+             "</div>";
+          }      
+      
+      "<div class='entry-content'>\n";
+
+         "<div class='entry-body'>\n";
+		 	"<div class='entry-text'>\n";
+
+      if (($showuserpic and defined $e.userpic) or $showposter) {
+          "<div class='inner-entry-userpic'>";
+          if ($showuserpic and defined $e.userpic) { "$e.userpic"; }
+          if (($showuserpic and defined $e.userpic) and $showposter) { "<br />"; }
+          if ($showposter) { "<span class='pic-poster'>"+lang_posted_by($e.poster, $e.journal)+"</span>"; }
+          "</div>";
+      }
+         		$e->print_text();
+			"</div>";
+         	"<div class='entry-metadata'>";
+         	$e->print_metadata();
+         	"</div>\n";
+         "</div>\n";
+
+         $e->print_linkbar();
+
+         
+       "</div>\n";
+	   "<div class='entry-footer'></div>\n";
+     "</div>\n";
+     "</div>\n";
+}
+
+function Page::print_entry(Entry e) {
+    print_entry($this, $e);
+}
+
+function ReplyPage::print_body
+{
+    if (not $.entry.comments.enabled) {
+        print "<h2>$*text_reply_nocomments_header</h2><p>$*text_reply_nocomments</p>";
+        return;
+    }
+
+
+	$this->print_entry($.entry);
+
+    container_open("comments");
+    """
+    <div class="comments-header"><h2>Comments</h2></div>
+    <div class="comments-list">
+      <div class="comments-nav comnav-upper">
+        ( <a href="$.entry.permalink_url">$*text_reply_back</a> )
+      </div> 
+      <a name="replyform"></a>
+      <div class="replyform">""";
+      $.form->print();
+      """
+      </div>
+    </div>
+    """;
+
+    container_close();
+}
+
+function YearPage::print_year_links() {
+    """<div class="yearlinks"><ul class="year">\n""";
+    foreach var YearYear y ($.years) {
+        var string class = "";
+        var string year  = $y.year + "";
+        if ($y.displayed) {
+            $class = " class=\"active\"";
+        } else {
+            $year  = """<a href="$y.url">$year</a>""";
+        }
+        """<li$class>$year</li>\n""";
+    }
+    """</ul></div>\n""";
+}
+
+function YearPage::print_month(YearMonth m) {
+    if (not $m.has_entries) { return; }
+
+    """
+    <div class="entry">
+      <div class="entry-inner">
+
+    <div class="entry-content">
+    <div class="entry-body">""";
+
+    """<table class="yeartable" align="center">\n
+       <tr><td colspan="4" class="monthlable">""";
+    print $m->month_format();
+    """</td>\n""";
+    """<td colspan="3" class="viewmonth">""";
+    print safe """<a href="$m.url">$*text_view_month</a></td></tr>\n<tr>\n""";
+    foreach var int d (weekdays()) {
+        """<td width="50" class="dayname">""" + $*lang_dayname_short[$d] + """</td>\n""";
+    }
+    "</tr>\n";
+    foreach var YearWeek w ($m.weeks) {
+        $w->print();
+    }
+    "</table>";
+
+    "</div></div>\n";
+    """<div class="entry-footer"></div>\n</div></div>\n""";
+}
+
+function DayPage::print_body() {
+    if ($.has_entries) {
+
+    "<div class='content-nav nav-top'>\n";
+    "<a href='$.prev_url'>$*text_day_prev</a> | ";
+    "<a href='$.next_url'>$*text_day_next</a>\n</div>";
+
+        "<div class=\"day\" id=\"dayyymmmmmdddd\">\n<div class='date-header'><h2>";
+        print $.date->date_format("long");
+        "</h2></div>\n";
+
+        foreach var Entry e ($.entries) {
+            $this->print_entry($e);
+            #if ($e->viewer_sees_ebox()) {
+             #   """<div style="margin-top: 20px; margin-bottom: 30px;">""";
+             #   $e->print_ebox();
+              #  "</div>";
+            #}
+        }
+
+        "</div>";
+    } else {
+        "<p>$*text_noentries_day</p>";
+    }
+
+    "<div class='content-nav nav-bottom'>\n";
+    "<a href='$.prev_url'>$*text_day_prev</a> | ";
+    "<a href='$.next_url'>$*text_day_next</a>\n</div>";
+
+}
+
